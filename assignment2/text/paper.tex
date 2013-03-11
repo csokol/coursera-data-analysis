@@ -98,7 +98,7 @@ a 0.04781145 error rate.
 
 Besides the predictions, the random forest is also capable of demonstraring the
 variables more important variables in determining the outcome of the prediction
-according to the Gini index. The following ten variables were the most important
+according to the Gini index. The following nine variables were the most important
 in building the prediction model:
 
 \begin{enumerate}
@@ -111,13 +111,34 @@ in building the prediction model:
     \item angle.X.gravityMean.
     \item tGravityAcc.max...Y
     \item tGravityAcc.mean...Y
-    \item tGravityAcc.energy...Y
 \end{enumerate}
 
+The plot in Figure \ref{fig:boxplots} shows nine boxplots of the variables listed
+above, categorized by the activity labeled in the row. Observing the boxplots,
+even though some variables do not split the activity sets completely,
+considering all those variables together, is possible to visually split the
+different activities considering the measurements described.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=16cm]{img/plots.png}
+    \caption{}
+    \label{fig:boxplots}
+\end{figure}
+
+\section{Conclusion}
+
+As we can see, using Random Forest classifier, we built a good classifier, with
+low error rates when making predictions both ing training and test sets. With
+this classifier, we were also able to find the most relevant variables in
+making the predictions. We could use the variables listed previously to build
+another classifier avoiding overfitting. This classifier would probably be
+worst in predicting in the test set, but could be even better in predicting
+instances from the test set.
+the training set.
 
 
-
-
+\clearpage
 \begin{thebibliography}{24}
 
 \bibitem{random-forest} Random Forest package site: \url{http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm}
