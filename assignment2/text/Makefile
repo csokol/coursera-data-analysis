@@ -30,4 +30,4 @@ clean:
 
 
 pygments:
-	pygmentize -f latex ../analysis.R > misc/script.tex
+	pygmentize -l text -f latex ../analysis.R > misc/script.tex

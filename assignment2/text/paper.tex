@@ -38,14 +38,14 @@ The data was collected through Samsung smartphones and can be found here:
 this format, the data is ready to be loaded to R environment. Since the data
 was already processed, it was'nt necessary to clean the data.
 
-We spplited the data into to data sets, the training set and the test set. The
+We splited the data into two data sets, the training set and the test set. The
 training set contained all rows with the value of column ``subject'' less than
 26, while the test contained the rest of the data. So the size of the training
-set was 3965 rows, while the test set was 1485.
+set was 5475 rows, while the test set was 1485.
 
 The data set provided contained 561 columns of quantitative measurements
 collected by accelerometers. We designed some exploratory graphs to better
-understand the relation between the variable and the associated actities.
+understand the relation between the variable and the associated activities.
 
 Since it was hard to analyze which columns were more significant to describe
 the human activity associated, we decided to use all the rows to create a model
@@ -57,18 +57,62 @@ training set. This function creates a predictive model by randomly calculating
 various classification trees and later using them to predict the outcome
 \cite{random-forest}.
 
-The following code 
+The following code was used to train the model and make the predictions on the test set:
 
+\begin{scriptsize}
 \input{misc/script.tex}
+\end{scriptsize}
 
 After running the randomForest function, we could use the resulting object to
-make predictions from the test data set. 
+make predictions from the test data set, as the code above shows. 
 
 
 \section{Results}
 
+By using the Random Forest, we developed a precise model to predict the human
+activities. The table \ref{forest-out} shows the confusion matrix of the model
+obtained. The error rate on the training set was 0.01369863. 
 
+\begin{table*}
+	\centering
+	\begin{tabular}{ | p{1.2cm} | p{1.2cm} | p{1.2cm} | p{1.2cm} | p{1.2cm} | p{1.2cm} | p{1.2cm} | p{1.5cm} | }
+		\hline
+           & \textbf{laying} & \textbf{sitting} & \textbf{standing} & \textbf{walk} & \textbf{walkdown} & \textbf{walkup} & \textbf{class.error} \\
+		\hline
+         \textbf{laying}     & 1038       & 0        & 0    & 0        & 0      & 0 & 0.000000000 \\
+         \textbf{sitting}       & 0     & 919       & 24    & 0       &  0      & 1 & 0.026483051 \\
+         \textbf{standing}      & 0      & 36      & 981    & 0       &  0      & 0 & 0.035398230 \\
+         \textbf{walk}          & 0       & 0        & 0  & 927       &  8      & 3 & 0.011727079 \\
+         \textbf{walkdown}      & 0      &  0        & 0    & 4      & 738      & 4 & 0.010869565 \\
+         \textbf{walkup}        & 0      &  0        & 0    & 0       &  5    & 794 & 0.006234414 \\
+		\hline
+	\end{tabular}
+    \vspace{0.3cm}
+	\caption{The random forest confusion matrix}
+	\label{forest-out}
+\end{table*}
 
+After training the predictive model, we used it to predict the activities from
+the test data set.  We obtained a total of 71 errors out of 1485, resulting in
+a 0.04781145 error rate.
+
+Besides the predictions, the random forest is also capable of demonstraring the
+variables more important variables in determining the outcome of the prediction
+according to the Gini index. The following ten variables were the most important
+in building the prediction model:
+
+\begin{enumerate}
+    \item tGravityAcc.mean...X
+    \item tGravityAcc.energy...X
+    \item tGravityAcc.min...Y
+    \item tGravityAcc.min...X
+    \item tGravityAcc.max...X
+    \item angle.Y.gravityMean.
+    \item angle.X.gravityMean.
+    \item tGravityAcc.max...Y
+    \item tGravityAcc.mean...Y
+    \item tGravityAcc.energy...Y
+\end{enumerate}
 
 
 
