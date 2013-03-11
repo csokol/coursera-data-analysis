@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+library\PY{p}{(}tree\PY{p}{)}
+library\PY{p}{(}randomForest\PY{p}{)}
+
+load\PY{p}{(}\PY{l+s}{"}\PY{l+s}{data/samsungData.rda"}\PY{p}{)}
+
+trainingSet \PY{o}{=} samsungData\PY{p}{[}samsungData\PY{p}{\PYZdl{}}subject \PY{o}{\PYZlt{}=} \PY{l+m}{25}\PY{p}{,}\PY{p}{]} 
+\PY{c+c1}{\PYZsh{}trainingSet = subset(trainingSet, select=-c(562)) \PYZsh{}excluding subject column}
+trainingSet \PY{o}{=} data.frame\PY{p}{(}trainingSet\PY{p}{)}
+trainingSet\PY{p}{\PYZdl{}}activity \PY{o}{=} as.factor\PY{p}{(}trainingSet\PY{p}{\PYZdl{}}activity\PY{p}{)}
+
+testSet \PY{o}{=} samsungData\PY{p}{[}samsungData\PY{p}{\PYZdl{}}subject \PY{o}{\PYZgt{}=} \PY{l+m}{27}\PY{p}{,}\PY{p}{]}
+\PY{c+c1}{\PYZsh{}testSet = subset(testSet, select=-c(562)) \PYZsh{}excluding subject column}
+testSet \PY{o}{=} data.frame\PY{p}{(}testSet\PY{p}{)}
+testSet\PY{p}{\PYZdl{}}activity \PY{o}{=} as.factor\PY{p}{(}testSet\PY{p}{\PYZdl{}}activity\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}plot(x=trainingSet\PYZdl{}angle.X.gravityMean., y=trainingSet\PYZdl{}angle.Y.gravityMean., col=as.numeric((trainingSet\PYZdl{}activity)), pch=19)}
+\PY{c+c1}{\PYZsh{}legend(-0.7,-0.5,legend=unique(trainingSet\PYZdl{}activity),col=unique(as.numeric(as.factor(trainingSet\PYZdl{}activity))),pch=19)}
+
+\PY{c+c1}{\PYZsh{}plot(x=trainingSet\PYZdl{}angle.X.gravityMean., y=trainingSet\PYZdl{}angle.Z.gravityMean., col=as.numeric(as.factor(trainingSet\PYZdl{}activity)), pch=19)}
+\PY{c+c1}{\PYZsh{}legend(-0.7,-0.5,legend=unique(trainingSet\PYZdl{}activity),col=unique(as.numeric((trainingSet\PYZdl{}activity))),pch=19)}
+
+\PY{c+c1}{\PYZsh{}tree1 \PYZlt{}- tree(activity \PYZti{} . - activity , data=trainingSet)}
+
+tree1 \PY{o}{\PYZlt{}-} randomForest\PY{p}{(}activity \PYZti{} \PY{l+m}{.} \PY{o}{-}activity\PY{p}{,} data \PY{o}{=} trainingSet\PY{p}{,} prox\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+predictions \PY{o}{=} predict\PY{p}{(}tree1\PY{p}{,} testSet\PY{p}{)}
+testSetSize \PY{o}{=} length\PY{p}{(}predictions\PY{p}{)}
+correctPredictions \PY{o}{=} predictions \PY{o}{==} testSet\PY{p}{\PYZdl{}}activity
+
+errors \PY{o}{=} table\PY{p}{(}correctPredictions\PY{p}{)}\PY{p}{[}\PY{l+m}{1}\PY{p}{]}
+
+misclassRate \PY{o}{=} errors\PY{o}{/}testSetSize
+
+
+
+plot\PY{p}{(}tree1\PY{p}{)}
+text\PY{p}{(}tree1\PY{p}{)}
+\end{Verbatim}

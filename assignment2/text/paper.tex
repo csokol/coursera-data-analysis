@@ -1,0 +1,89 @@
+\documentclass[IEEEtran]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{flushend}
+\usepackage{listings}
+\usepackage{hyperref} 
+\usepackage{verbatim} 
+\usepackage[pdftex]{graphicx} 
+\usepackage[T1]{fontenc}
+\usepackage[table]{xcolor}
+\usepackage{soul}
+\graphicspath{{./images/}}
+\urlstyle{same} 
+
+\input{misc/pygments.tex}
+
+\begin{document}
+
+\title{Data Analysis Project 2}
+\author{Francisco Sokol}
+
+\maketitle
+
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
+
+In this project, we were challenged to develop a function to predict the
+activity of a person according to data collected by a smartphone. Modern
+smartphones can measure the user's movement patterns through the data captured
+by a accelerometer bundled with the phone \cite{acelerometro}. So data collected by samsung
+smartphones accelerometers was provided to us, labeled with the activity of the
+person using the smartphone.
+
+\section{Method}
+
+The data was collected through Samsung smartphones and can be found here:
+\url{https://spark-public.s3.amazonaws.com/dataanalysis/samsungData.rda}. In
+this format, the data is ready to be loaded to R environment. Since the data
+was already processed, it was'nt necessary to clean the data.
+
+We spplited the data into to data sets, the training set and the test set. The
+training set contained all rows with the value of column ``subject'' less than
+26, while the test contained the rest of the data. So the size of the training
+set was 3965 rows, while the test set was 1485.
+
+The data set provided contained 561 columns of quantitative measurements
+collected by accelerometers. We designed some exploratory graphs to better
+understand the relation between the variable and the associated actities.
+
+Since it was hard to analyze which columns were more significant to describe
+the human activity associated, we decided to use all the rows to create a model
+for classificating the data.
+
+To develop the model to predict the human activities, we used the Random Forest
+R package and the randomForest function to build the predictive model with the
+training set. This function creates a predictive model by randomly calculating
+various classification trees and later using them to predict the outcome
+\cite{random-forest}.
+
+The following code 
+
+\input{misc/script.tex}
+
+After running the randomForest function, we could use the resulting object to
+make predictions from the test data set. 
+
+
+\section{Results}
+
+
+
+
+
+
+
+
+\begin{thebibliography}{24}
+
+\bibitem{random-forest} Random Forest package site: \url{http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm}
+\bibitem{acelerometro} Wikipedia article about accelerometer: \url{http://en.wikipedia.org/wiki/Accelerometer}
+
+\bibitem{murphy} Murphy-Hill, E.; Parnin, C.; Black, A. P  How we refactor, and how we know it. 
+Proceedings of the 2009 IEEE 31st International Conference on Software Engineering, 2009.
+
+\end{thebibliography}
+
+% that's all folks
+\end{document}
+
